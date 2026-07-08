@@ -1,0 +1,202 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+export default function Register() {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const e = {};
+    if (!email) e.email = "Can't be empty";
+    if (!pass) e.pass = "Please check again";
+    if (!confirm) e.confirm = "Can't be empty";
+    else if (confirm !== pass) e.confirm = "Please check again";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const border = (f) =>
+    errors[f] ? "1px solid #FF3939" : "1px solid #D9D9D9";
+
+  return (
+    <div style={styles.wrapper}>
+    
+      <div style={styles.logo}>
+        <div style={styles.logoBox}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M9 12a4 4 0 0 1 4-4h3a4 4 0 1 1 0 8h-1" stroke="white" strokeWidth="2" />
+            <path d="M15 12a4 4 0 0 1-4 4H8a4 4 0 1 1 0-8h1" stroke="white" strokeWidth="2" />
+          </svg>
+        </div>
+
+        <span style={styles.brand}>devlinks</span>
+      </div>
+
+      <div style={styles.card}>
+        <h1 style={styles.title}>Create account</h1>
+        <p style={styles.subtitle}>
+          Let’s get you started sharing your links!
+        </p>
+
+        <div style={styles.field}>
+          <label style={styles.label}>Email address</label>
+          <div style={{ ...styles.inputBox, border: border("email") }}>
+            <input
+              style={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="alex@email.com"
+            />
+          </div>
+          {errors.email && <span style={styles.error}>{errors.email}</span>}
+        </div>
+
+        <div style={styles.field}>
+          <label style={styles.label}>Create password</label>
+          <div style={{ ...styles.inputBox, border: border("pass") }}>
+            <input
+              type="password"
+              style={styles.input}
+              value={pass}
+              onChange={(e) => setPass(e.target.value)}
+              placeholder="At least 8 characters"
+            />
+          </div>
+          {errors.pass && <span style={styles.error}>{errors.pass}</span>}
+        </div>
+
+        <div style={styles.field}>
+          <label style={styles.label}>Confirm password</label>
+          <div style={{ ...styles.inputBox, border: border("confirm") }}>
+            <input
+              type="password"
+              style={styles.input}
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              placeholder="At least 8 characters"
+            />
+          </div>
+          {errors.confirm && <span style={styles.error}>{errors.confirm}</span>}
+        </div>
+
+        <button onClick={validate} style={styles.button}>
+          Create account
+        </button>
+
+        <p style={styles.footer}>
+          Already have an account?{" "}
+          <Link style={styles.link} to="/login">
+            Login
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+const styles = {
+  wrapper: {
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "#FAFAFA",
+    fontFamily: "Instrument Sans, sans-serif",
+    padding: 20,
+  },
+
+  logo: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 24,
+  },
+
+  logoBox: {
+    width: 36,
+    height: 36,
+    background: "#633CFF",
+    borderRadius: 10,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  brand: {
+    fontSize: 16,
+    fontWeight: 700,
+    color: "#08060d",
+  },
+
+  card: {
+    width: "100%",
+    maxWidth: 380,
+    background: "#fff",
+    padding: 32,
+    borderRadius: 12,
+  },
+
+  title: {
+    fontSize: 32,
+    fontWeight: 700,
+    margin: 0,
+    color: "#08060d",
+  },
+
+  subtitle: {
+    fontSize: 16,
+    color: "#737373",
+    marginBottom: 24,
+  },
+
+  field: {
+    marginBottom: 16,
+  },
+
+  inputBox: {
+    padding: "10px 12px",
+    borderRadius: 8,
+    background: "#fff",
+  },
+
+  input: {
+    width: "100%",
+    border: "none",
+    outline: "none",
+    fontSize: 14,
+    fontFamily: "Instrument Sans, sans-serif",
+  },
+
+  error: {
+    fontSize: 12,
+    color: "#FF3939",
+    marginTop: 4,
+    display: "block",
+  },
+
+  button: {
+    width: "100%",
+    padding: 12,
+    background: "#633CFF",
+    color: "#fff",
+    border: "none",
+    borderRadius: 8,
+    fontWeight: 700,
+  },
+
+  footer: {
+    marginTop: 16,
+    textAlign: "center",
+    fontSize: 12,
+    color: "#737373",
+  },
+
+  link: {
+    color: "#633CFF",
+    fontWeight: 700,
+    textDecoration: "none",
+  },
+};
