@@ -54,7 +54,7 @@ export default function Dashboard() {
                     return;
                 }
 
-                const res = await fetch("http://localhost:5000/api/links", {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/links`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -121,17 +121,19 @@ export default function Dashboard() {
         try {
             const token = getToken();
 
-            const res = await fetch("http://localhost:5000/api/links", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    title: platformId,
-                    url: "",
-                }),
-            });
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/links`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        title: platformId,
+                        url: "",
+                    }),
+                });
 
             const newLink = await res.json();
 
@@ -163,7 +165,8 @@ export default function Dashboard() {
             const token = getToken();
             const linkId = links[index]._id;
 
-            await fetch(`http://localhost:5000/api/links/${linkId}`, {
+            await fetch(
+                `${import.meta.env.VITE_API_URL}/api/links/${linkId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,

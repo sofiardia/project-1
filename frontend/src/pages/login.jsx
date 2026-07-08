@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; 
+import { useNavigate, Link } from "react-router-dom";
+import { loginUser } from "../api/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -7,17 +8,6 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const loginUser = async (email, pass) => {
-  const res = await fetch("http://localhost:5000/api/auth/login",  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password: pass }),
-  });
-
-  return await res.json();
-};
   const handleLogin = async () => {
     const e = {};
 
