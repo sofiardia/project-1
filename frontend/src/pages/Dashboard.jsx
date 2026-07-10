@@ -54,7 +54,7 @@ export default function Dashboard() {
                     return;
                 }
 
-                const res = await fetch("http://localhost:5000/api/links", {
+                const res = await fetch("/api/links",  {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -121,7 +121,7 @@ export default function Dashboard() {
         try {
             const token = getToken();
 
-            const res = await fetch("http://localhost:5000/api/links", {
+            const res = await fetch("/api/links",  {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -163,7 +163,7 @@ export default function Dashboard() {
             const token = getToken();
             const linkId = links[index]._id;
 
-            await fetch(`http://localhost:5000/api/links/${linkId}`, {
+           await fetch(`/api/links/${linkId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
