@@ -14,7 +14,24 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-connectDB();
+let isConnected = false;
+
+const connectDatabase = async () => {
+  if (isConnected) return;
+
+  await connectDB();
+  isConnected = true;
+};
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDatabase();
+    next();
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    res.status(500).json({ message: "Database connection failed" });
+  }
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/links", linkRoutes);
