@@ -8,7 +8,6 @@ import userRoutes from "./routes/user.routes.js";
 import protect from "./middleware/auth.middleware.js";
 
 dotenv.config();
-
 const app = express();
 
 app.use(cors());
@@ -19,15 +18,12 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/links", linkRoutes);
 app.use("/api/users", userRoutes);
-
 app.get("/", (req, res) => {
     res.json({ message: "API is running 🚀" });
 });
-
 app.get("/api/test", (req, res) => {
     res.json({ message: "Test route works 🎉" });
 });
-
 app.get("/api/protected", protect, (req, res) => {
     res.json({
         message: "You are authorized 🔥",
@@ -35,4 +31,9 @@ app.get("/api/protected", protect, (req, res) => {
     });
 });
 
-export default app;
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
